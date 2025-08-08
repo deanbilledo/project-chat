@@ -20,6 +20,12 @@ const registeredUsers = new Map(); // All registered user accounts (nickname -> 
 const typingUsers = new Set();
 const privateTyping = new Map(); // Track private message typing
 
+// Session message storage - persists until server restart
+const sessionMessages = {
+  public: [], // All public messages for this session
+  private: [] // All private messages for this session
+};
+
 // Serve static files from public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -70,6 +76,24 @@ io.on('connection', (socket) => {
       totalUsers: registeredUsers.size
     });
 
+    // Send all session messages to the newly logged-in user
+    console.log(`Sending ${sessionMessages.public.length} public messages and ${sessionMessages.private.filter(msg => msg.from.toLowerCase() === nickname.toLowerCase() || msg.to.toLowerCase() === nickname.toLowerCase()).length} private messages to ${nickname}`);
+    
+    // Send public messages
+    sessionMessages.public.forEach(message => {
+      socket.emit('chat-message', message);
+    });
+
+    // Send private messages that involve this user
+    sessionMessages.private
+      .filter(message => 
+        message.from.toLowerCase() === nickname.toLowerCase() || 
+        message.to.toLowerCase() === nickname.toLowerCase()
+      )
+      .forEach(message => {
+        socket.emit('private-message', message);
+      });
+
     // Notify all users about the new user coming online
     socket.broadcast.emit('user-online', {
       nickname: nickname,
@@ -119,6 +143,14 @@ io.on('connection', (socket) => {
       type: 'private'
     };
 
+    // Store message in session storage
+    sessionMessages.private.push(messageData);
+
+    // Keep only last 1000 private messages to prevent memory issues
+    if (sessionMessages.private.length > 1000) {
+      sessionMessages.private.shift();
+    }
+
     console.log(`Private message from ${sender.nickname} to ${data.to}: ${data.message}`);
 
     // Send to sender (confirmation)
@@ -148,6 +180,14 @@ io.on('connection', (socket) => {
         timestamp: new Date().toISOString(),
         type: 'public'
       };
+
+      // Store message in session storage
+      sessionMessages.public.push(messageData);
+
+      // Keep only last 500 public messages to prevent memory issues
+      if (sessionMessages.public.length > 500) {
+        sessionMessages.public.shift();
+      }
 
       console.log(`Public message from ${user.nickname}: ${data.message}`);
 
@@ -256,6 +296,7 @@ server.listen(PORT, '0.0.0.0', () => {
 🌐 Network access: http://[YOUR_IP]:${PORT}
 👥 Waiting for users to connect...
 💬 Features: Public chat, Private messages, User search
+📱 Session Messages: Public (${sessionMessages.public.length}), Private (${sessionMessages.private.length})
   `);
   
   // Display network interfaces for easy sharing
