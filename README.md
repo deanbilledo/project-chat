@@ -211,3 +211,4 @@ Feel free to fork and modify this project for your needs. Some ideas for enhance
 ## License
 
 MIT License - feel free to use and modify as needed.
+Start-Process powershell -ArgumentList "-Command", "npx localtunnel --port 3000" -WindowStyle Normal
