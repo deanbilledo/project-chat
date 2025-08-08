@@ -1,0 +1,54 @@
+🌐 MESSENGER APP - PORT FORWARDING SETUP GUIDE
+==================================================
+
+✅ YOUR SERVER STATUS:
+- Local Server: RUNNING on port 3000
+- Local IP: 192.168.1.57
+- Public IP: 49.145.202.77
+- Router IP: 192.168.1.1
+
+📋 PORT FORWARDING CONFIGURATION:
+==================================
+
+1. Open web browser and go to: http://192.168.1.1
+2. Login with router credentials (check router sticker)
+3. Find "Port Forwarding" or "Virtual Server" section
+4. Add new rule:
+   - Service Name: Messenger App
+   - External Port: 3000
+   - Internal IP: 192.168.1.57
+   - Internal Port: 3000
+   - Protocol: TCP
+   - Status: Enabled
+
+🔗 URLS TO SHARE WITH FRIENDS:
+=============================
+
+After setting up port forwarding, share this URL:
+👉 http://49.145.202.77:3000
+
+📱 LOCAL ACCESS (for testing):
+=============================
+- http://localhost:3000
+- http://192.168.1.57:3000
+
+🔧 TROUBLESHOOTING:
+==================
+- Ensure Windows Firewall allows port 3000
+- Check router firewall settings
+- Verify port forwarding rule is active
+- Test with friends outside your network
+
+📞 STATUS CHECK:
+===============
+- Server: ✅ Running
+- Port 3000: ✅ Listening
+- Local Access: ✅ Working
+- Port Forwarding: ⏳ Needs router configuration
+
+🎯 NEXT STEPS:
+=============
+1. Configure router port forwarding
+2. Test with: http://49.145.202.77:3000
+3. Share URL with friends
+4. Enjoy chatting!

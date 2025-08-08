@@ -1,0 +1,47 @@
+🌐 MESSENGER APP - ACCESS INFORMATION
+==========================================
+
+✅ CURRENT STATUS:
+- Server: RUNNING on port 3000
+- Local IP: 192.168.1.57
+- Router IP: 192.168.1.1
+- Public IP: 49.145.202.77
+
+📋 PORT FORWARDING SETTINGS:
+============================
+Configure these settings in your router admin panel:
+
+Service Name: Messenger App
+External Port: 3000
+Internal IP: 192.168.1.57
+Internal Port: 3000
+Protocol: TCP
+Status: Enabled
+
+🔗 ACCESS URLS:
+==============
+
+LOCAL ACCESS (for you):
+👉 http://localhost:3000
+👉 http://192.168.1.57:3000
+
+INTERNET ACCESS (for friends after port forwarding):
+👉 http://49.145.202.77:3000
+
+📱 SHARING WITH FRIENDS:
+=======================
+After setting up port forwarding, share this URL:
+http://49.145.202.77:3000
+
+🔧 TROUBLESHOOTING:
+==================
+1. Ensure port forwarding is configured correctly
+2. Check Windows Firewall allows port 3000
+3. Verify server is running: node server.js
+4. Test locally first, then share with friends
+
+💡 QUICK START:
+==============
+1. Start server: node server.js
+2. Configure router port forwarding
+3. Share: http://49.145.202.77:3000
